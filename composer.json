@@ -1,5 +1,5 @@
 {
-    "name": "babenkoivan/elastic-scout-driver-plus",
+    "name": "uqlibrary/elastic-scout-driver-plus",
     "description": "Extension for Elastic Scout Driver",
     "keywords": [
         "scout",
@@ -39,13 +39,13 @@
     },
     "require": {
         "php": "^7.4 || ^8.0",
-        "babenkoivan/elastic-scout-driver": "^3.1",
-        "babenkoivan/elastic-adapter": "^3.4"
+        "uqlibrary/elastic-scout-driver": "dev-master",
+        "uqlibrary/elastic-adapter": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "orchestra/testbench": "^8.0",
-        "babenkoivan/elastic-migrations": "^3.3",
+        "uqlibrary/elastic-migrations": "dev-master",
         "laravel/scout": "^10.0",
         "friendsofphp/php-cs-fixer": "^3.14",
         "phpstan/phpstan": "^1.10",
@@ -63,5 +63,25 @@
                 "Elastic\\ScoutDriverPlus\\ServiceProvider"
             ]
         }
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "git@github.com:uqlibrary/elastic-client"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com:uqlibrary/elastic-adapter"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com:uqlibrary/elastic-migrations"
+        },
+        {
+            "type": "vcs",
+            "url":  "git@github.com:uqlibrary/elastic-scout-driver"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

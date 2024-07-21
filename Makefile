@@ -12,11 +12,13 @@ MYSQL_USER := test
 MYSQL_PASSWORD := test
 
 ## elasticsearch config
-ES_VERSION ?= 8.2.0
-ES_CONTAINER_IMAGE := elasticsearch:${ES_VERSION}
+ES_VERSION ?= 2.15.0
+ES_CONTAINER_IMAGE := opensearchproject/opensearch:${ES_VERSION}
 ES_CONTAINER_NAME := elastic-scout-driver-plus-elasticsearch
 ES_HOST_PORT := 29200
 ES_DISCOVERY_TYPE := single-node
+OPENSEARCH_INITIAL_ADMIN_PASSWORD=ijR234fw34N59023434-9f34
+OPENSEARCH_DISABLE_SECURITY_PLUGIN=true
 
 up: ## Start containers
 	@printf "\033[93m→ Starting ${MYSQL_CONTAINER_NAME} container\033[0m\n"
@@ -36,7 +38,8 @@ up: ## Start containers
     		--name ${ES_CONTAINER_NAME} \
     		-p ${ES_HOST_PORT}:9200 \
     		-e discovery.type=${ES_DISCOVERY_TYPE} \
-            -e xpack.security.enabled=false \
+            -e "DISABLE_SECURITY_PLUGIN=${OPENSEARCH_DISABLE_SECURITY_PLUGIN}" \
+            -e "OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" \
     		${ES_CONTAINER_IMAGE}
 	@printf "\033[92m✔︎ ${ES_CONTAINER_NAME} is started\033[0m\n"
 
@@ -56,7 +59,7 @@ wait: ## Wait until containers are ready
 	@printf "\033[92m✔︎ ${MYSQL_CONTAINER_NAME} is ready\033[0m\n"
 
 	@printf "\033[93m→ Waiting for ${ES_CONTAINER_NAME} container\n\033[0m"
-	@until curl -fsS "\n" "127.0.0.1:${ES_HOST_PORT}/_cluster/health?wait_for_status=green&timeout=60s"; do \
+	@until curl -fsS -ku admin:"${OPENSEARCH_INITIAL_ADMIN_PASSWORD}" "\n" "127.0.0.1:${ES_HOST_PORT}/_cluster/health?wait_for_status=green&timeout=60s"; do \
 		printf "\033[91m✘ ${ES_CONTAINER_NAME} is not ready, waiting...\033[0m\n"; \
 		sleep 5; \
 	done
