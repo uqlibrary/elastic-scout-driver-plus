@@ -12,7 +12,7 @@ MYSQL_USER := test
 MYSQL_PASSWORD := test
 
 ## elasticsearch config
-ES_VERSION ?= 2.15.0
+ES_VERSION ?= 2.13.0
 ES_CONTAINER_IMAGE := opensearchproject/opensearch:${ES_VERSION}
 ES_CONTAINER_NAME := elastic-scout-driver-plus-elasticsearch
 ES_HOST_PORT := 29200
